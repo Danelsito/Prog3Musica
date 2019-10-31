@@ -1,9 +1,14 @@
 package baseDatos;
 
 import java.beans.Statement;
+import java.lang.System.Logger.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import objetos.User;
+
+import java.sql.*;
 
 public class BD {
 	
@@ -37,8 +42,8 @@ public class BD {
 		String email = null;
 		int telefono = 0;
 		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = (Statement) conn.createStatement();
+			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(sql);
 
 			// loop through the result set
 			while (rs.next()) {
@@ -49,10 +54,11 @@ public class BD {
 				telefono = Integer.parseInt(rs.getString("telefono"));
 			}
 		} catch (SQLException e) {
-			Datos.log.log(Level.SEVERE, "Método crearUsuarioLocal ha fallado. " + e);
+			
+			Datos.log.log(Level.WARNING, "Método crearUsuarioLocal ha fallado. " + e);
 		}
 		// Este será el usuario cliente que ha iniciado sesión y utiliza el programa.
-		Datos.usuarioactual = new UserActual(usuario, password, nombre, apellido, email,
+		Datos.usuarioactual = new User(usuario, password, nombre, apellido, email,
 				telefono);
 	}
 

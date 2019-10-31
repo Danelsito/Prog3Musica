@@ -2,17 +2,27 @@ package objetos;
 
 public class User {
 	public String username;
+	public String password;
 	public String nombre;
 	public String apellido;
 	public String email;
 	public int telefono;
 
-	public User(String username, String nombre, String apellido, String email, int telefono) {
+	public User(String username,String password, String nombre, String apellido, String email, int telefono) {
 		this.username = username;
+		this.password = password;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.telefono = telefono;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getUsername() {
