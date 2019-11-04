@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Login extends JFrame {
+public class Registro extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -29,7 +29,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					Registro frame = new Registro();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
+	public Registro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -49,7 +49,7 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogin = new JLabel("LOGIN");
+		JLabel lblLogin = new JLabel("REGISTRO");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblLogin.setBounds(6, 27, 438, 26);
@@ -72,29 +72,21 @@ public class Login extends JFrame {
 		lblPassword.setBounds(77, 139, 76, 16);
 		contentPane.add(lblPassword);
 		
-		JButton btnSingIn = new JButton("Sign In");
+		JButton btnSingIn = new JButton("Volver");
 		btnSingIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				char[] clave = passwordField.getPassword();
-				String pass = new String(clave);
-				
-				if(textField.getText().equals("Grupo")&& pass.equals("1234")) {
-					dispose();
-					JOptionPane.showMessageDialog(null, "Bienvenido!","INGRESASTE", JOptionPane.INFORMATION_MESSAGE);
-					//aquiventanaprincipal p = new aquiventanaprincipal();
-					//p.setVisible(true);
-				}else {
-					JOptionPane.showMessageDialog(null, "Usuario o Contraseña incorrectos.","ERROR", JOptionPane.ERROR_MESSAGE);
-					
-				}
 			}
 		});
-		btnSingIn.setBounds(180, 216, 117, 29);
+		btnSingIn.setBounds(6, 243, 117, 29);
 		contentPane.add(btnSingIn);
 		
-		JButton btnRegistro = new JButton("Registro");
-		btnRegistro.setBounds(64, 216, 117, 29);
+		JButton btnRegistro = new JButton("Registrar");
+		btnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRegistro.setBounds(159, 201, 117, 29);
 		contentPane.add(btnRegistro);
 	}
 }
