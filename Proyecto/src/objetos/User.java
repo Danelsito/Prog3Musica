@@ -1,24 +1,29 @@
+
 package objetos;
 
 public class User {
 	public String username;
-	public String location;
+	public String password;
 	public String nombre;
 	public String apellido;
-	public int dni;
 	public String email;
 	public int telefono;
-	public String image;
 
-	public User(String username, String location, String nombre, String apellido, int dni, String email, int telefono, String image) {
+	public User(String username,String password, String nombre, String apellido, String email, int telefono) {
 		this.username = username;
-		this.location = location;
+		this.password = password;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.dni = dni;
 		this.email = email;
 		this.telefono = telefono;
-		this.image = image;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getUsername() {
@@ -27,14 +32,6 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
 	}
 
 	public String getNombre() {
@@ -53,14 +50,6 @@ public class User {
 		this.apellido = apellido;
 	}
 
-	public int getDni() {
-		return dni;
-	}
-
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -77,12 +66,5 @@ public class User {
 		this.telefono = telefono;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 }
+>>>>>>> branch 'master' of https://github.com/Danelsito/Prog3Musica.git
