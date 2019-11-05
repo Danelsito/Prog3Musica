@@ -90,11 +90,18 @@ public class Login extends JFrame {
 				}
 			}
 		});
-		btnSingIn.setBounds(180, 216, 117, 29);
+		btnSingIn.setBounds(237, 216, 117, 29);
 		contentPane.add(btnSingIn);
 		
 		JButton btnRegistro = new JButton("Registro");
-		btnRegistro.setBounds(64, 216, 117, 29);
+		btnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registro v = new Registro();
+				v.setVisible(true);
+				dispose();
+			}
+		});
+		btnRegistro.setBounds(108, 216, 117, 29);
 		contentPane.add(btnRegistro);
 	}
 }

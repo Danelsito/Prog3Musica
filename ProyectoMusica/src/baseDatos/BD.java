@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 
 import objetos.Datos;
@@ -16,7 +17,7 @@ public class BD {
 	
 	private Connection connect() {
 		// SQLite connection string
-		String url = "jdbc:sqlite:src/proyecto";
+		String url = "jdbc:sqlite:src/basedatos.db";
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url);
@@ -74,7 +75,7 @@ public class BD {
 			 stmt.close();	
 			
 		} catch (SQLException sqle) {
-			System.out.println("Error en la ejecución: " 
+			System.out.println("Error en la ejecuciï¿½n: " 
 				    + sqle.getErrorCode() + " " + sqle.getMessage());    
 		}
 		
@@ -91,10 +92,29 @@ public class BD {
 			 stmt.close();	
 			
 		} catch (SQLException sqle) {
-			System.out.println("Error en la ejecución: " 
+			System.out.println("Error en la ejecuciï¿½n: " 
 				    + sqle.getErrorCode() + " " + sqle.getMessage());    
 		}
 		
+	}
+	
+	public void introducirUser(String username, String password, String nombre, String apellido, String email, int telefono, Date fecha) throws SQLException {
+
+		String sql = "INSERT INTO user (username, password, nombre, apellidos, email, tlfn, fecha) VALUES (?,?,?,?,?,?,?)";
+		Connection conn = this.connect();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+		pstmt.setString(1, username);
+		pstmt.setString(2, password);
+		pstmt.setString(3, nombre);
+		pstmt.setString(4, apellido);
+		pstmt.setString(5, email);
+		pstmt.setInt(6, telefono);
+		
+		String strFecha = fecha.toString();
+		pstmt.setString(7, strFecha);
+		pstmt.executeUpdate();
+
 	}
 
 }

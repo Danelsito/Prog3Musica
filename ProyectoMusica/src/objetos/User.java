@@ -1,13 +1,16 @@
 
 package objetos;
 
+import java.util.Date;
+
 public class User {
-	public String username, fecha;
-	public String getFecha() {
+	public String username;
+	public Date fecha;
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
@@ -17,7 +20,7 @@ public class User {
 	public String email;
 	public int telefono;
 
-	public User(String username, String password, String nombre, String apellido, String email, int telefono, String fecha) {
+	public User(String username, String password, String nombre, String apellido, String email, int telefono, Date fecha) {
 		this.username = username;
 		this.password = password;
 		this.nombre = nombre;

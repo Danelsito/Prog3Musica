@@ -7,10 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import com.toedter.calendar.JDateChooser;
 
+import objetos.Datos;
 import objetos.User;
 
 import javax.swing.JLabel;
@@ -21,6 +20,8 @@ import javax.swing.JPasswordField;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
@@ -36,11 +37,6 @@ public class Registro extends JFrame {
 	private JLabel lblApellidos;
 	private JLabel lblEmail;
 	private JLabel lblTlfn;
-	private JComboBox cbDia, cbAno, cbMes;
-	private JLabel lblDia;
-	private JLabel lblMes;
-	private JLabel lblAo;
-
 	/**
 	 * Launch the application.
 	 */
@@ -92,25 +88,11 @@ public class Registro extends JFrame {
 		contentPane.add(lblPassword);
 		
 		JButton btnSingIn = new JButton("Volver");
-		btnSingIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		btnSingIn.setBounds(16, 375, 117, 29);
 		contentPane.add(btnSingIn);
 		
 		JButton btnRegistro = new JButton("Registrar");
-		btnRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String fecha = cbDia.getSelectedItem() + "/" + cbMes.getSelectedIndex()+1 + "/" + cbAno.getSelectedItem();
-				
-				char[] clave = txfPass.getPassword();
-				String pass = new String(clave);
-				int tlfn = Integer.parseInt(txfTlfn.getText());
-				User u = new User(txfUsuario.getText(), pass, txfNombre.getText(), txfApellidos.getText(), txfEmail.getText(), tlfn, fecha);
-			}
-		});
+		
 		btnRegistro.setBounds(310, 375, 117, 29);
 		contentPane.add(btnRegistro);
 		
@@ -151,45 +133,46 @@ public class Registro extends JFrame {
 		contentPane.add(lblTlfn);
 		
 		
-		cbMes.setBounds(181, 293, 94, 27);
-		contentPane.add(cbMes);
-		cbMes.addItem("Enero");
-		cbMes.addItem("Febrero");
-		cbMes.addItem("Marzo");
-		cbMes.addItem("Abril");
-		cbMes.addItem("Mayo");
-		cbMes.addItem("Junio");
-		cbMes.addItem("Julio");
-		cbMes.addItem("Agosto");
-		cbMes.addItem("Septiembre");
-		cbMes.addItem("Octubre");
-		cbMes.addItem("Noviembre");
-		cbMes.addItem("Diciembre");
+		 
+		// Instanciar Componente
+		JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
+		 
+		// Ubicar y agregar al panel
+		dateChooser.setBounds(181, 293, 100, 20);
+		 
+		contentPane.add(dateChooser);
 		
-		cbDia = new JComboBox();
-		cbDia.setBounds(78, 293, 52, 27);
-		contentPane.add(cbDia);
-		for (int i = 1; i<=31; i++) {
-			cbDia.addItem(i+"");
-		}
+		JLabel lblFechaNac = new JLabel("Fecha nac:");
+		lblFechaNac.setBounds(78, 297, 76, 16);
+		contentPane.add(lblFechaNac);
 		
-		cbAno = new JComboBox();
-		cbAno.setBounds(329, 293, 52, 27);
-		contentPane.add(cbAno);
+		btnSingIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
-		lblDia = new JLabel("Dia:");
-		lblDia.setBounds(45, 297, 61, 16);
-		contentPane.add(lblDia);
-		
-		lblMes = new JLabel("Mes:");
-		lblMes.setBounds(151, 297, 61, 16);
-		contentPane.add(lblMes);
-		
-		lblAo = new JLabel("Año:");
-		lblAo.setBounds(291, 297, 61, 16);
-		contentPane.add(lblAo);
-		for (int i = 1920; i<=2019; i++) {
-			cbAno.addItem(i+"");
-		}
+		btnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Date fecha = dateChooser.getDate();
+				char[] clave = txfPass.getPassword();
+				String pass = new String(clave);
+				int tlfn = Integer.parseInt(txfTlfn.getText());
+				
+				String username = txfUsuario.getText();
+				String nombre = txfNombre.getText();
+				String apellido = txfApellidos.getText();
+				String email = txfEmail.getText();
+				
+				try {
+					Datos.conn.introducirUser(username, pass, nombre, apellido, email, tlfn, fecha);
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}
+				User u = new User(username, pass, nombre, apellido, email, tlfn, fecha);
+				
+			}
+		});
 	}
 }
