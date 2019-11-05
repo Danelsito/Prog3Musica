@@ -3,6 +3,7 @@ package baseDatos;
 import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -59,6 +60,41 @@ public class BD {
 		}
 		// Este serÃ¡ el usuario cliente que ha iniciado sesiÃ³n y utiliza el programa.
 		//Datos.usuarioactual = new User(usuario, password, nombre, apellido, email, telefono); 
+	}
+	
+	public void tablaUsuario() {
+		try {
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE usuario(username varchar(50) PRIMARY KEY NOT NULL,"
+					+ "password VARCHAR(50) NOT NULL,"
+					+ "nombre VARCHAR(50) NOT NULL,"
+					+ "apellido VARCHAR(50) NOT NULL,"
+					+ "email VARCHAR(50),"
+					+ "telefono INT(9)");
+			 stmt.execute(); 
+			 stmt.close();	
+			
+		} catch (SQLException sqle) {
+			System.out.println("Error en la ejecución: " 
+				    + sqle.getErrorCode() + " " + sqle.getMessage());    
+		}
+		
+		
+	}
+	
+	public void tablaCancion() {
+		try {
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE cancion(titulo varchar(50) PRIMARY KEY NOT NULL,"
+					+ "duracion_en_segundos INT(50) NOT NULL,"
+					+ "artista VARCHAR(50) NOT NULL,"
+					+ "album VARCHAR(50),");
+			 stmt.execute(); 
+			 stmt.close();	
+			
+		} catch (SQLException sqle) {
+			System.out.println("Error en la ejecución: " 
+				    + sqle.getErrorCode() + " " + sqle.getMessage());    
+		}
+		
 	}
 
 }
