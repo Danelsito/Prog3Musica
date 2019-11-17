@@ -57,6 +57,7 @@ public class Registro extends JFrame {
 	 * Create the frame.
 	 */
 	public Registro() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 443);
 		contentPane = new JPanel();
@@ -87,9 +88,9 @@ public class Registro extends JFrame {
 		lblPassword.setBounds(78, 108, 76, 16);
 		contentPane.add(lblPassword);
 		
-		JButton btnSingIn = new JButton("Volver");
-		btnSingIn.setBounds(16, 375, 117, 29);
-		contentPane.add(btnSingIn);
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.setBounds(16, 375, 117, 29);
+		contentPane.add(btnVolver);
 		
 		JButton btnRegistro = new JButton("Registrar");
 		
@@ -146,8 +147,11 @@ public class Registro extends JFrame {
 		lblFechaNac.setBounds(78, 297, 76, 16);
 		contentPane.add(lblFechaNac);
 		
-		btnSingIn.addActionListener(new ActionListener() {
+		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Login l = new Login();
+				dispose();
+				l.setVisible(true);
 				
 			}
 		});
@@ -171,6 +175,10 @@ public class Registro extends JFrame {
 					e1.printStackTrace();
 				}
 				User u = new User(username, pass, nombre, apellido, email, tlfn, fecha);
+				Login l = new Login();
+				dispose();
+				l.setVisible(true);
+				
 				
 			}
 		});

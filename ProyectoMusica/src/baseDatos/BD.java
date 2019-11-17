@@ -1,11 +1,13 @@
 package baseDatos;
 
-import java.beans.Statement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Wrapper;
 import java.util.Date;
 import java.util.logging.Level;
 
@@ -15,7 +17,7 @@ import objetos.User;
 public class BD {
 	
 	
-	private Connection connect() {
+	public static Connection connect() {
 		// SQLite connection string
 		String url = "jdbc:sqlite:src/basedatos.db";
 		Connection conn = null;
@@ -34,26 +36,29 @@ public class BD {
 	
 	public void crearUsuarioLocal(String usuario) {
 
-		String sql = "SELECT * FROM Users WHERE user = '" + usuario + "'";
+		String sql = "SELECT * FROM user WHERE username = '" + usuario + "'";
 
 		Connection conn = this.connect();
 		Statement stmt;
 		String password = null;
 		String nombre = null;
-		String apellido = null;
+		String apellidos = null;
 		String email = null;
 		int telefono = 0;
+		String fecha = null;
+		
 		try {
-			stmt = (Statement) conn.createStatement();
-			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(sql);
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
 			// loop through the result set
 			while (rs.next()) {
 				password = rs.getString("password");
 				nombre = rs.getString("nombre");
-				apellido = rs.getString("apellido");
+				apellidos = rs.getString("apellidos");
 				email = rs.getString("email");
-				telefono = Integer.parseInt(rs.getString("telefono"));
+				telefono = Integer.parseInt(rs.getString("tlfn"));
+				//fecha = fecha.toString();
 			}
 		} catch (SQLException e) {
 			
@@ -114,6 +119,35 @@ public class BD {
 		String strFecha = fecha.toString();
 		pstmt.setString(7, strFecha);
 		pstmt.executeUpdate();
+
+	}
+	
+	public boolean login(String userIntroducido, String passIntroducido) {
+		String sql = "SELECT password FROM user WHERE username LIKE '" + userIntroducido + "'";
+		Connection conn = this.connect();
+		Statement stmt;
+		passIntroducido = passIntroducido.replaceAll(" ", "");
+		String password = "";
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			// loop through the result set
+			while (rs.next()) {
+				password = rs.getString("password").replaceAll(" ", "");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (password.contains(passIntroducido)/*||passIntroducido.contains(password)*/) {
+			return true;
+
+		}
+
+		else {
+			return false;
+
+		}
 
 	}
 
