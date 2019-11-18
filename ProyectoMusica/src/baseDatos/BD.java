@@ -70,7 +70,8 @@ public class BD {
 	
 	public void tablaUsuario() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE usuario(username varchar(50) PRIMARY KEY NOT NULL,"
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE usuario("
+			 		+ "username varchar(50) PRIMARY KEY NOT NULL,"
 					+ "password VARCHAR(50) NOT NULL,"
 					+ "nombre VARCHAR(50) NOT NULL,"
 					+ "apellido VARCHAR(50) NOT NULL,"
@@ -103,22 +104,59 @@ public class BD {
 		
 	}
 	
-	public void introducirUser(String username, String password, String nombre, String apellido, String email, int telefono, Date fecha) throws SQLException {
-
-		String sql = "INSERT INTO user (username, password, nombre, apellidos, email, tlfn, fecha) VALUES (?,?,?,?,?,?,?)";
-		Connection conn = this.connect();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-
-		pstmt.setString(1, username);
-		pstmt.setString(2, password);
-		pstmt.setString(3, nombre);
-		pstmt.setString(4, apellido);
-		pstmt.setString(5, email);
-		pstmt.setInt(6, telefono);
+	public void tablaUsuarioPlaylist() {
+		try {
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist_relacion_usuario("
+			 		+ "FOREIGN KEY(\"username\") REFERENCES \"usuario\"(\"username\") ON DELETE CASCADE,"
+					+ "nombre_playlist VARCHAR(50) NOT NULL,");
+			 stmt.execute(); 
+			 stmt.close();	
+			
+		} catch (SQLException sqle) {
+			System.out.println("Error en la ejecuci�n: " 
+				    + sqle.getErrorCode() + " " + sqle.getMessage());    
+		}
 		
-		String strFecha = fecha.toString();
-		pstmt.setString(7, strFecha);
-		pstmt.executeUpdate();
+	}
+	public void tablaCancionPlaylist() {
+		try {
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist_relacion_cancion("
+			 		+ "FOREIGN KEY(\"playlist\") REFERENCES \"playlist_relacion_usuario\"(\"nombre_playlist\") ON DELETE CASCADE,"
+					+ "FOREIGN KEY(\"cancion\") REFERENCES \"cancion\"(\"titulo\") ON DELETE CASCADE,");
+			 stmt.execute(); 
+			 stmt.close();	
+			
+		} catch (SQLException sqle) {
+			System.out.println("Error en la ejecuci�n: " 
+				    + sqle.getErrorCode() + " " + sqle.getMessage());    
+		}
+		
+	}
+	
+	public void introducirUser(String username, String password, String nombre, String apellido, String email, int telefono, Date fecha) throws SQLException {
+		try {
+
+			String sql = "INSERT INTO user (username, password, nombre, apellidos, email, tlfn, fecha) VALUES (?,?,?,?,?,?,?)";
+			Connection conn = this.connect();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+			pstmt.setString(3, nombre);
+			pstmt.setString(4, apellido);
+			pstmt.setString(5, email);
+			pstmt.setInt(6, telefono);
+			
+			String strFecha = fecha.toString();
+			pstmt.setString(7, strFecha);
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+			
+		} catch (SQLException sqle) {
+			System.out.println("Los datos introducidos no son correctos");
+		}
+		
 
 	}
 	
@@ -149,6 +187,41 @@ public class BD {
 
 		}
 
+	}
+	
+	public void introducirCancion(String titulo, int duracion_en_segundos, String artista, String album) throws SQLException {
+		try {
+
+			String sql = "INSERT INTO cancion (titulo, duracion_en_segundos, album, artista) VALUES (?,?,?,?)";
+			Connection conn = this.connect();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, titulo);
+			pstmt.setInt(2, duracion_en_segundos);
+			pstmt.setString(3, artista);
+			pstmt.setString(4, album);
+			
+			pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+			
+		} catch (SQLException sqle) {
+			System.out.println("Los datos introducidos no son correctos");
+		}
+		
+	}
+	
+	public int devolverCancionesUsername(String username) throws SQLException {
+
+		String sql = "SELECT * FROM cancion WHERE username="+username;
+
+		Connection conn = this.connect();
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		
+		
+		return 0;
 	}
 
 }
