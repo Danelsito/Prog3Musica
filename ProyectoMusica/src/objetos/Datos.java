@@ -1,12 +1,9 @@
 package objetos;
 
-import java.awt.Image;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import baseDatos.BD;
 
 
 /**
@@ -17,11 +14,11 @@ import javax.swing.JFrame;
 
 public class Datos {
 	public static Logger log = Logger.getLogger("Proyecto");
-	
+	public static BD conn = new BD();
 	//Estructuras de datos
 	/*public static ArrayList<JFrame> ventanaProducto = new ArrayList<>();
 	public static ArrayList<JFrame> ventanaPerfil = new ArrayList<>();
-	public static HashMap<String, Double> mapDistancias = new HashMap<>();
-	public static HashMap<String, String> propiedades = new HashMap();*/
+	public static HashMap<String, Double> mapDistancias = new HashMap<>();*/
+	public static HashMap<String, String> propiedades = new HashMap();
 	
 }
