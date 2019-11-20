@@ -2,38 +2,63 @@ package sonido;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
-public class ReproductorMP3 {
-	   static boolean pausa = false;
+public class ReproductorMP3 implements IReproducir{
+	 private List<String> Playlist = new ArrayList<>();
+	@Override
+	public void reproducirFile(String rArchivo) throws FileNotFoundException, JavaLayerException {
+		 Player apl = new Player(new FileInputStream(rArchivo));
+		 
+		 apl.play();
+	}
 
-	   public static void main(String[] args) throws FileNotFoundException,
-	         JavaLayerException, InterruptedException {
-	      final Player pl = new Player(new FileInputStream(
-	            "ruta del archivo"));
+	@Override
+	public void pausar() {
+		// TODO Auto-generated method stub
+		
+	}
 
-	      new Thread() {
-	         public void run() {
-	            try {
-	               while (true) {
-	                  if (!pausa) {
-	                     if (!pl.play(1)) {
-	                        break;
-	                     }
-	                  }
-	               }
-	            } catch (JavaLayerException e) {
-	               e.printStackTrace();
-	            }
-	         }
-	      }.start();
+	@Override
+	public void reproducirPL(ArrayList<String> Playlist) throws FileNotFoundException, JavaLayerException {
+		boolean rebobinar = false;
+		boolean saltar = false;
+		for(int i = 0; i < Playlist.size(); i++) {
+			if(rebobinar) {
+				i--;
+			}
+			if(saltar) {
+				i++;
+			}
+			
+			Player apl = new Player(new FileInputStream(Playlist.get(i)));
+			 
+			 apl.play();
+		}
+		
+	}
 
-	      Thread.sleep(5000);
-	      pausa = true;
-	      System.out.println("pausado");
-	      Thread.sleep(2000);
-	      pausa = false;
-	   }
+	@Override
+	public void anyadir_playlist(String rArchivo) {
+		Playlist.add(rArchivo);		
+	}
+
+	@Override
+	public boolean rebobinar() {
+		return true;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean saltar_cancion() {
+		return true;
+		
+	}
+
+
 }
