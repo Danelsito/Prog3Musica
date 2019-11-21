@@ -9,7 +9,18 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 public class ReproductorMP3 implements IReproducir{
-	 private List<String> Playlist = new ArrayList<>();
+	
+	private List<String> Playlist = new ArrayList<>();
+	 
+	 
+	public void setPlaylist(List<String> playlist) {
+		Playlist = playlist;
+	}
+
+	public List<String> getPlaylist() {
+		return Playlist;
+	}
+
 	@Override
 	public void reproducirFile(String rArchivo) throws FileNotFoundException, JavaLayerException {
 		 Player apl = new Player(new FileInputStream(rArchivo));
