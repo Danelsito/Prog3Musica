@@ -17,8 +17,8 @@ public class ReproductorMP3 implements IReproducir{
 		Playlist = playlist;
 	}
 
-	public List<String> getPlaylist() {
-		return Playlist;
+	public ArrayList<String> getPlaylist() {
+		return (ArrayList<String>) Playlist;
 	}
 
 	@Override
