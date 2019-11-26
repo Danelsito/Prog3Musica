@@ -6,14 +6,6 @@ import java.util.Date;
 public class User {
 	public String username;
 	public Date fecha;
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
 	public String password;
 	public String nombre;
 	public String apellido;
@@ -77,5 +69,14 @@ public class User {
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
 
 }
