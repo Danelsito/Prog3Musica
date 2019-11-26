@@ -90,7 +90,9 @@ public class BD {
 	
 	public void tablaCancion() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE cancion(titulo varchar(50) PRIMARY KEY NOT NULL,"
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE cancion("
+					+ "id INT(50) PRIMARY KEY NOT NULL,"
+			 		+ "titulo varchar(50) NOT NULL,"
 					+ "duracion_en_segundos INT(50) NOT NULL,"
 					+ "artista VARCHAR(50) NOT NULL,"
 					+ "album VARCHAR(50),");
@@ -104,11 +106,13 @@ public class BD {
 		
 	}
 	
-	public void tablaUsuarioPlaylist() {
+	public void tablaPlaylist() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist_relacion_usuario("
-			 		+ "FOREIGN KEY(\"username\") REFERENCES \"usuario\"(\"username\") ON DELETE CASCADE,"
-					+ "nombre_playlist VARCHAR(50) NOT NULL,");
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist("
+					+ "id INT(50) PRIMARY KEY NOT NULL,"
+					+ "nombre_playlist VARCHAR(50) NOT NULL,"
+			 		+ "FOREIGN KEY(\"usuario\") REFERENCES \"usuario\"(\"username\") ON DELETE CASCADE,"
+			 		+ "FOREIGN KEY(\"id_cancion\") REFERENCES \"cancion\"(\"id\") ON DELETE CASCADE,");
 			 stmt.execute(); 
 			 stmt.close();	
 			
@@ -118,11 +122,13 @@ public class BD {
 		}
 		
 	}
-	public void tablaCancionPlaylist() {
+	public void insert() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist_relacion_cancion("
-			 		+ "FOREIGN KEY(\"playlist\") REFERENCES \"playlist_relacion_usuario\"(\"nombre_playlist\") ON DELETE CASCADE,"
-					+ "FOREIGN KEY(\"cancion\") REFERENCES \"cancion\"(\"titulo\") ON DELETE CASCADE,");
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlistCancion ("
+					+ "FOREIGN KEY(\"id_cancion\") REFERENCES \"cancion\"(\"id\") ON DELETE CASCADE,"
+					+ "FOREIGN KEY(\"id_playlist\") REFERENCES \"playlist\"(\"id\") ON DELETE CASCADE,"
+					+ "PRIMARY KEY (id_cancion, id_playlist),"
+					);
 			 stmt.execute(); 
 			 stmt.close();	
 			
@@ -134,12 +140,13 @@ public class BD {
 	}
 	
 	public void introducirUser(String username, String password, String nombre, String apellido, String email, int telefono, Date fecha) throws SQLException {
-		try {
+		
 
 			String sql = "INSERT INTO user (username, password, nombre, apellidos, email, tlfn, fecha) VALUES (?,?,?,?,?,?,?)";
 			Connection conn = this.connect();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
+		try {
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
 			pstmt.setString(3, nombre);
@@ -158,6 +165,10 @@ public class BD {
 		}
 		
 
+	}
+	
+	public void anyadirCancionEnPlaylist(String cancion, String playlist) {
+		
 	}
 	
 	public boolean login(String userIntroducido, String passIntroducido) {
@@ -209,19 +220,6 @@ public class BD {
 			System.out.println("Los datos introducidos no son correctos");
 		}
 		
-	}
-	
-	public int devolverCancionesUsername(String username) throws SQLException {
-
-		String sql = "SELECT * FROM cancion WHERE username="+username;
-
-		Connection conn = this.connect();
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(sql);
-		
-		
-		
-		return 0;
 	}
 
 }
