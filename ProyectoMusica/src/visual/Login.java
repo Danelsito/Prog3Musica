@@ -99,6 +99,8 @@ public class Login extends JFrame {
 					//Datos.propiedades.put("key", usuarioIntroducido+";"+passIntroducido);
 					dispose();
 					loguear(usuarioIntroducido);
+					VentanaPrincipal v = new VentanaPrincipal();
+					v.setVisible(true);
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Credenciales incorrectas. Por favor, inténtelo de nuevo", "Error", JOptionPane.WARNING_MESSAGE);
