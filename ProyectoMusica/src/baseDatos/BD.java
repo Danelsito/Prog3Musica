@@ -111,8 +111,7 @@ public class BD {
 			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist("
 					+ "id INT(50) PRIMARY KEY NOT NULL,"
 					+ "nombre_playlist VARCHAR(50) NOT NULL,"
-			 		+ "FOREIGN KEY(\"usuario\") REFERENCES \"usuario\"(\"username\") ON DELETE CASCADE,"
-			 		+ "FOREIGN KEY(\"id_cancion\") REFERENCES \"cancion\"(\"id\") ON DELETE CASCADE,");
+			 		+ "FOREIGN KEY(\"usuario\") REFERENCES \"usuario\"(\"username\") ON DELETE CASCADE,");
 			 stmt.execute(); 
 			 stmt.close();	
 			
@@ -122,11 +121,12 @@ public class BD {
 		}
 		
 	}
-	public void insert() {
+	
+	public void tablaCancionPlaylist() {
 		try {
 			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlistCancion ("
-					+ "FOREIGN KEY(\"id_cancion\") REFERENCES \"cancion\"(\"id\") ON DELETE CASCADE,"
-					+ "FOREIGN KEY(\"id_playlist\") REFERENCES \"playlist\"(\"id\") ON DELETE CASCADE,"
+					+ "FOREIGN KEY(\"idCancion\") REFERENCES \"cancion\"(\"id\") ON DELETE CASCADE,"
+					+ "FOREIGN KEY(\"idPlaylist\") REFERENCES \"playlist\"(\"id\") ON DELETE CASCADE,"
 					+ "PRIMARY KEY (id_cancion, id_playlist),"
 					);
 			 stmt.execute(); 
@@ -136,6 +136,25 @@ public class BD {
 			System.out.println("Error en la ejecuci�n: " 
 				    + sqle.getErrorCode() + " " + sqle.getMessage());    
 		}
+		
+	}
+	
+	public void insertarCancionEnPlaylist(int idCancion, int idPlaylist) {
+		String sql = "INSERT INTO playlistCancion (idCancion, idPlaylist) VALUES (?,?,)";
+		Connection conn = this.connect();
+		
+	try {
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, idCancion);
+		pstmt.setInt(2, idPlaylist);
+
+		pstmt.executeUpdate();
+		pstmt.close();
+		conn.close();
+		
+	} catch (SQLException sqle) {
+		System.out.println("Los datos introducidos no son correctos");
+	}
 		
 	}
 	
@@ -167,9 +186,7 @@ public class BD {
 
 	}
 	
-	public void anyadirCancionEnPlaylist(String cancion, String playlist) {
-		
-	}
+
 	
 	public boolean login(String userIntroducido, String passIntroducido) {
 		String sql = "SELECT password FROM user WHERE username LIKE '" + userIntroducido + "'";
