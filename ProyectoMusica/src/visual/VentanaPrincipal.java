@@ -62,6 +62,14 @@ public class VentanaPrincipal extends JFrame{
 		menuBar.add(mntmNewMenuItem);
 		
 		JButton btnNewButton_3 = new JButton("Log Out");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login v = new Login();
+				v.setVisible(true);
+				dispose();
+				
+			}
+		});
 		menuBar.add(btnNewButton_3);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
