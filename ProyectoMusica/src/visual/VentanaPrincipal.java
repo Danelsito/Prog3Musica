@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 import javax.swing.JButton;
@@ -13,12 +14,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import baseDatos.BD;
+import objetos.Cancion;
 import objetos.Datos;
 import java.awt.BorderLayout;
+import java.awt.Component;
+
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
@@ -27,12 +32,15 @@ import java.awt.Panel;
 import javax.swing.JSplitPane;
 import javax.swing.JList;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextPane;
 
 public class VentanaPrincipal extends JFrame{
 	
 	private JPanel contentPane;
 	public static BD conn = new BD();
 	private JTextField textField;
+	private JTable table;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -81,22 +89,17 @@ public class VentanaPrincipal extends JFrame{
 		
 		JPanel panelCanciones = new JPanel();
 		tabbedPane.addTab("Canciones", null, panelCanciones, null);
-		panelCanciones.setLayout(new BorderLayout(0, 0));
+		panelCanciones.setLayout(null);
 		
-		JSplitPane splitPane = new JSplitPane();
-		panelCanciones.add(splitPane, BorderLayout.CENTER);
-		
-		JList list = new JList();
-		splitPane.setLeftComponent(list);
-		
-		JList list_1 = new JList();
-		splitPane.setRightComponent(list_1);
+		JList listaCanciones = new JList(Cancion);
+		listaCanciones.setBounds(0, 0, 390, 288);
+		panelCanciones.add(listaCanciones);
 		
 		Panel panelPlaylists = new Panel();
 		tabbedPane.addTab("Playlists", null, panelPlaylists, null);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Álbumes", null, panel, null);
+		tabbedPane.addTab("Ã�lbumes", null, panel, null);
 		
 		JPanel panelBusqueda = new JPanel();
 		contentPane.add(panelBusqueda, BorderLayout.NORTH);
@@ -106,7 +109,19 @@ public class VentanaPrincipal extends JFrame{
 		panelBusqueda.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tituloIntroducido = textField.getText();
+				BD bd = new BD();
+				ArrayList<Cancion> canciones = bd.consultarCanciones(tituloIntroducido);
+				JList<Cancion> jlistaCanciones = new JList<>();
+				jlistaCanciones.setBounds(0, 0, 390, 288);
+				panelCanciones.add(listaCanciones);
+				jlistaCanciones.setModel((ListModel<Cancion>) canciones);
+			}
+		});
+			
 		panelBusqueda.add(btnNewButton, BorderLayout.EAST);
 	}
 }

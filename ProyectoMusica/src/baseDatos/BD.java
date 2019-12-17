@@ -8,8 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Wrapper;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
+
+import javax.swing.AbstractListModel;
+import javax.swing.ListModel;
+
+import objetos.Cancion;
 
 import objetos.Datos;
 import objetos.User;
@@ -217,10 +224,10 @@ public class BD {
 
 	}
 	
-	public void introducirCancion(String titulo, int duracion_en_segundos, String artista, String album) throws SQLException {
+	public void introducirCancion(String titulo, int duracion_en_segundos, String artista, String album, String ubicacion) throws SQLException {
 		try {
 
-			String sql = "INSERT INTO cancion (titulo, duracion_en_segundos, album, artista) VALUES (?,?,?,?)";
+			String sql = "INSERT INTO cancion (titulo, duracion_en_segundos, album, artista, ubicacion) VALUES (?,?,?,?,?)";
 			Connection conn = this.connect();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
@@ -228,6 +235,7 @@ public class BD {
 			pstmt.setInt(2, duracion_en_segundos);
 			pstmt.setString(3, artista);
 			pstmt.setString(4, album);
+			pstmt.setString(5, ubicacion);
 			
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -237,6 +245,44 @@ public class BD {
 			System.out.println("Los datos introducidos no son correctos");
 		}
 		
+	}
+	
+	public ArrayList<Cancion> consultarCanciones(String tituloIntroducido) {
+
+		String sql = "SELECT * FROM cancion WHERE titulo LIKE " + tituloIntroducido;
+		String titulo = null;
+		int duracion = 0;
+		String artista = null;
+		String album = null;
+		String ubicacion = null;
+		
+		ArrayList<Cancion> canciones = new ArrayList<>();
+
+		Connection conn = this.connect();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			// loop through the result set
+			
+			while (rs.next()) {
+				titulo = rs.getString("titulo");
+				duracion = rs.getInt("duracion_en_segundos");
+				artista = rs.getString("artista");
+				album = rs.getString("album");
+				ubicacion = rs.getString("ubicacion");
+				
+				Cancion c = new Cancion(titulo, duracion, artista, album, ubicacion);
+				if (c.getTitulo().contains(tituloIntroducido)) {
+					canciones.add(c);
+				}
+			}
+		} catch (SQLException sqle) {
+			Datos.log.log(Level.SEVERE, "Método consultar canciones ha fallado. " + sqle);
+			sqle.printStackTrace();
+		}
+		return canciones;
 	}
 
 }
