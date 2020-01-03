@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import baseDatos.BD;
 import objetos.Cancion;
 import objetos.Datos;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 
@@ -36,6 +38,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 
 public class VentanaPrincipal extends JFrame{
+	BD bd= new BD(); 
 	
 	private JPanel contentPane;
 	public static BD conn = new BD();
@@ -91,16 +94,12 @@ public class VentanaPrincipal extends JFrame{
 		tabbedPane.addTab("Canciones", null, panelCanciones, null);
 		panelCanciones.setLayout(null);
 		
-		JList listaCanciones = new JList(Cancion);
-		listaCanciones.setBounds(0, 0, 390, 288);
-		panelCanciones.add(listaCanciones);
-		
-		Panel panelPlaylists = new Panel();
+	/*	Panel panelPlaylists = new Panel();
 		tabbedPane.addTab("Playlists", null, panelPlaylists, null);
-		
-		JPanel panel = new JPanel();
+	*/	
+	/*	JPanel panel = new JPanel();
 		tabbedPane.addTab("Ã�lbumes", null, panel, null);
-		
+	*/	
 		JPanel panelBusqueda = new JPanel();
 		contentPane.add(panelBusqueda, BorderLayout.NORTH);
 		panelBusqueda.setLayout(new BorderLayout(0, 0));
@@ -109,19 +108,34 @@ public class VentanaPrincipal extends JFrame{
 		panelBusqueda.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Buscar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JList<Cancion> jlistaCanciones = new JList<>();
+		jlistaCanciones.setBounds(0, 0, 390, 288);
+		panelCanciones.add(jlistaCanciones);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(405, 16, 142, 37);
+		contentPane.add(comboBox, BorderLayout.WEST);
+		bd.consultarCancionesA(textField.getText()).size();
+		for(int i = 0; i< bd.consultarCancionesA(textField.getText()).size(); i++){
+			comboBox.addItem(bd.consultarCancionesA(textField.getText()).get(i));
+		}
+		
+		JButton btnBuscar = new JButton("Buscar");
+		panelBusqueda.add(btnBuscar, BorderLayout.EAST);
+		/*btnBuscar.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
-				String tituloIntroducido = textField.getText();
 				BD bd = new BD();
-				ArrayList<Cancion> canciones = bd.consultarCanciones(tituloIntroducido);
-				JList<Cancion> jlistaCanciones = new JList<>();
-				jlistaCanciones.setBounds(0, 0, 390, 288);
-				panelCanciones.add(listaCanciones);
-				jlistaCanciones.setModel((ListModel<Cancion>) canciones);
+				try {
+					bd.connect();
+					bd.consultarCanciones(textField.getText());
+					HashMap<Integer, String> mapaCanciones = bd.consultarCanciones(textField.getText());
+					jlistaCanciones.a(mapaCanciones);
+				} catch (Exception e2) {
+
+				}
+				
 			}
-		});
-			
-		panelBusqueda.add(btnNewButton, BorderLayout.EAST);
+		});*/
 	}
 }

@@ -2,19 +2,19 @@ package objetos;
 
 public class Cancion {
 	
+	private int id;
 	private String titulo;
 	private int duracion_en_segundos;
 	private String artista;
 	private String album;
-	private String ubicacion;
 	
-	public Cancion(String titulo, int duracion_en_segundos, String artista, String album, String ubicacion) {
+	public Cancion(int id, String titulo, int duracion_en_segundos, String artista, String album) {
 		super();
+		this.id = id;
 		this.titulo = titulo;
 		this.duracion_en_segundos = duracion_en_segundos;
 		this.artista = artista;
 		this.album = album;
-		this.ubicacion = ubicacion;
 	}
 
 	public String getTitulo() {
@@ -49,14 +49,9 @@ public class Cancion {
 		this.album = album;
 	}
 
-	public String getUbicacion() {
-		return ubicacion;
+	public int getId() {
+		return id;
 	}
-
-	public void setUbicacion(String ubicacion) {
-		this.ubicacion = ubicacion;
-	}
-	
 	
 	
 	

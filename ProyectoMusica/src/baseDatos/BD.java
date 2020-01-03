@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.Wrapper;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -24,7 +25,7 @@ import objetos.User;
 public class BD {
 	
 	
-	public static Connection connect() {
+	public Connection connect() {
 		// SQLite connection string
 		String url = "jdbc:sqlite:src/basedatos.db";
 		Connection conn = null;
@@ -77,7 +78,7 @@ public class BD {
 	
 	public void tablaUsuario() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE usuario("
+			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE IF NOT EXISTS usuario("
 			 		+ "username varchar(50) PRIMARY KEY NOT NULL,"
 					+ "password VARCHAR(50) NOT NULL,"
 					+ "nombre VARCHAR(50) NOT NULL,"
@@ -99,7 +100,7 @@ public class BD {
 		try {
 			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE cancion("
 					+ "id INT(50) PRIMARY KEY NOT NULL,"
-			 		+ "titulo varchar(50) NOT NULL,"
+			 		+ "titulo VARCHAR(50) NOT NULL,"
 					+ "duracion_en_segundos INT(50) NOT NULL,"
 					+ "artista VARCHAR(50) NOT NULL,"
 					+ "album VARCHAR(50),");
@@ -247,41 +248,83 @@ public class BD {
 		
 	}
 	
-	public ArrayList<Cancion> consultarCanciones(String tituloIntroducido) {
+	public HashMap<Integer, String> consultarCanciones(String tituloIntroducido) {
 
 		String sql = "SELECT * FROM cancion WHERE titulo LIKE " + tituloIntroducido;
+		int id = 0;
 		String titulo = null;
 		int duracion = 0;
 		String artista = null;
 		String album = null;
-		String ubicacion = null;
 		
-		ArrayList<Cancion> canciones = new ArrayList<>();
+		 HashMap<Integer, String>  mapaCanciones = new HashMap<>();
 
 		Connection conn = this.connect();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("está en el método");
 
 			// loop through the result set
 			
 			while (rs.next()) {
+				id = rs.getInt("id");
 				titulo = rs.getString("titulo");
 				duracion = rs.getInt("duracion_en_segundos");
 				artista = rs.getString("artista");
 				album = rs.getString("album");
-				ubicacion = rs.getString("ubicacion");
 				
-				Cancion c = new Cancion(titulo, duracion, artista, album, ubicacion);
+				Cancion c = new Cancion(id, titulo, duracion, artista, album);
 				if (c.getTitulo().contains(tituloIntroducido)) {
-					canciones.add(c);
+					mapaCanciones.put(id, titulo);
 				}
 			}
 		} catch (SQLException sqle) {
 			Datos.log.log(Level.SEVERE, "MÃ©todo consultar canciones ha fallado. " + sqle);
 			sqle.printStackTrace();
+			System.out.println("Sale del método");
 		}
+		return mapaCanciones;
+	}
+	
+	public ArrayList<String> consultarCancionesA(String tituloIntroducido){
+		ArrayList<String> canciones = new ArrayList<>();
+		
+		String sql = "SELECT * FROM cancion WHERE titulo LIKE " + tituloIntroducido;
+		int id = 0;
+		String titulo = null;
+		int duracion = 0;
+		String artista = null;
+		String album = null;
+		
+		Connection conn = this.connect();
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println("está en el método");
+
+			// loop through the result set
+			
+			while (rs.next()) {
+				id = rs.getInt("id");
+				titulo = rs.getString("titulo");
+				duracion = rs.getInt("duracion_en_segundos");
+				artista = rs.getString("artista");
+				album = rs.getString("album");
+				
+				Cancion c = new Cancion(id, titulo, duracion, artista, album);
+				if (c.getTitulo().contains(tituloIntroducido)) {
+					canciones.add(titulo);
+				}
+			}
+		} catch (SQLException sqle) {
+			Datos.log.log(Level.SEVERE, "MÃ©todo consultar canciones ha fallado. " + sqle);
+			sqle.printStackTrace();
+			System.out.println("Sale del método");
+		}
+		
 		return canciones;
 	}
 
