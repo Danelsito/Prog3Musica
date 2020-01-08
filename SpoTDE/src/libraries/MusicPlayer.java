@@ -22,7 +22,7 @@ public class MusicPlayer {
     FileInputStream FIS;
     BufferedInputStream BIS;
     
-     public long pauseLocation;
+    public long pauseLocation;
     public long songTotalLength;
     public String fileLocation;
     
@@ -36,7 +36,8 @@ public class MusicPlayer {
     
     
     
-    // Basic Functions
+    
+    //Reproducir
         public void Play(String path){
             
             Stop();
@@ -75,8 +76,8 @@ public class MusicPlayer {
         
     }
         
-//==================================================================play END
-        
+
+   //Pausa     
    public void Pause() throws IOException{
         if(player != null){
             try{
@@ -92,8 +93,8 @@ public class MusicPlayer {
     }
    
    
- //====================================================================pause END
-   
+
+   //Parar del todo
    public void Stop(){
         if(player != null){
             player.close();
@@ -104,7 +105,7 @@ public class MusicPlayer {
         }
     }
    
-   //================================================================resume END
+   //Continuar (después de pausa)
     public void Resume(){
         
         try {
@@ -134,8 +135,7 @@ public class MusicPlayer {
     }
     
     
-    //// set data  -------------------------------------------------------------------------------------------
-    
+    // Como hacer el setUp
     public void putMetaData(Song song, String path, String fileName){
         try {
             

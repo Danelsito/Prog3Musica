@@ -48,9 +48,7 @@ public class Conexion {
            WriteConexion=new ObjectOutputStream(new FileOutputStream("playListData.dat"));
 
            return WriteConexion;
-           //fichero.writeObject(v);
-//WriteConexion.wri
-           //conn.close();
+
         } catch(IOException e){
 
             System.out.printf("error "+e);
