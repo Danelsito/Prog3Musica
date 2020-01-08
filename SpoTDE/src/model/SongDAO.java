@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import libraries.Conexion;
 import model.Song;
 
-
+//Esta clase gestiona la conexión con playlistdat.dat que se encarga de los archivos .mp3 de la aplicación
 public class SongDAO {
     
     List<Song> songs=null;
@@ -26,7 +26,7 @@ public class SongDAO {
         conn = new Conexion();
         songs = new LinkedList<>();
     }
-    
+    //método que elimina la canción de la lista y luego crea una conexión para actualizar el archivo.
     public void deleteSong(List<Song> musics, int idSong){
         
         try {
@@ -41,7 +41,7 @@ public class SongDAO {
             Logger.getLogger(SongDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    //similar al método anterior pero hace un vaciado completo de golpe
     public void deleteAllSongs(List<Song> musics){
         musics.removeAll(musics);
         try {
@@ -50,7 +50,7 @@ public class SongDAO {
             Logger.getLogger(Song.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    //métido para primero añadir canciones a la lista de reproducción y luego actualizar el archivo.
     public void insertSongs(List<Song> s){
         try {
             writeConexion = conn.getWriteConexion();
@@ -62,17 +62,18 @@ public class SongDAO {
         }
     }
     
+    //metodo que devuelve la lista de canciones en el archivo
     public List<Song> getSongs(){
         readConexion = conn.getReadConexion();
-//----------------------------------------------------------- falta arreglar esto
+
         try {
             if(readConexion!=null){
-                System.out.println("dentro de songDAO, getsongs.. existe cancionesss");
+                System.out.println("dentro de songDAO, tiene archivos");
                 songs = (List<Song>) readConexion.readObject();
                 conn.closeReadConexion(readConexion);
                return songs;
             }else{
-                System.out.println("dentro de songDAO, getsongs. devolvio nulo");
+                System.out.println("dentro de songDAO, no tiene archivos");
                 return null;
             }
             

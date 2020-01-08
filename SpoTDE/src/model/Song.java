@@ -1,6 +1,6 @@
 package model;
 import java.io.Serializable;
-
+//clase con getters y setters del modelo de una cancion
 public class Song implements Serializable{
     
     
