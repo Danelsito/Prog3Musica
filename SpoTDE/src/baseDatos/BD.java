@@ -16,7 +16,7 @@ import objetos.User;
 
 public class BD {
 	
-	
+	//conexión con la BD
 	public static Connection connect() {
 		// SQLite connection string
 		String url = "jdbc:sqlite:src/view/basedatos.db";
