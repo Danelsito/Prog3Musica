@@ -58,7 +58,7 @@ public class UserInterface extends javax.swing.JFrame {
      * Parte del codigo de la que se encarga .form
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // Inicialización de variables
     private void initComponents() {
 
         kGradientPanel1 = new keeptoo.KGradientPanel();
@@ -96,12 +96,18 @@ public class UserInterface extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        kGradientPanel1.setkEndColor(new java.awt.Color(42, 41, 76));
+        //Definición de los colores que van a formar el gradiente,
+        //El método utilizado es Color(R, G, B)
+        
+        kGradientPanel1.setkEndColor(new java.awt.Color(0, 0, 0));
+        //Color de abajo
         kGradientPanel1.setkGradientFocus(0);
-        kGradientPanel1.setkStartColor(new java.awt.Color(189, 110, 111));
+        kGradientPanel1.setkStartColor(new java.awt.Color(13, 165, 95));
+        //Color de arriba
 
         jPanel1.setOpaque(false);
-
+        
+        //Añadimos imagen y acción al botón para cerrar la ventana
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/close.png"))); // NOI18N
         btnClose.setBorderPainted(false);
         btnClose.setContentAreaFilled(false);
@@ -112,6 +118,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        //Añadimos imagen y acción al botón para minimizar la ventana
         btnMinimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/minimize.png"))); // NOI18N
         btnMinimize.setBorderPainted(false);
         btnMinimize.setContentAreaFilled(false);
@@ -121,7 +128,8 @@ public class UserInterface extends javax.swing.JFrame {
                 minimizeClick(evt);
             }
         });
-
+        //El panel que contiene los botones cerrar y minimizar ventana
+        // y que define tamaño y posición de estos
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -142,9 +150,11 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
+        
         jPanel2.setOpaque(false);
-
+        
+        //JList que va a cargar la lista de canciones disponibles
+        //para reproducir
         jList1.setBackground(new java.awt.Color(248, 248, 248));
         jList1.setForeground(new java.awt.Color(184, 169, 169));
         jList1.setSelectionBackground(new java.awt.Color(171, 98, 126));
@@ -153,15 +163,22 @@ public class UserInterface extends javax.swing.JFrame {
                 jList1MouseClicked(evt);
             }
         });
+        //JList implementado al JScrollPane para poder subir y bajar
+        //en caso de que la lista sacada sea más grande que
+        //el tamaño de la lista
         jScrollPane1.setViewportView(jList1);
 
         jPanel7.setOpaque(false);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Play List");
-
+        
+        
+       // JPanel7 es un subpanel contenido en JPanel2, para añadir el
+        //label que tiene como titulo PlayList
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
+        //Se añade el label y se define su tamaño y posición
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
@@ -173,7 +190,10 @@ public class UserInterface extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
-
+        
+        
+        //Se añade el panel del label recientemente definido y el
+        //ScrollPane que contiene a su propio objeto y el JList
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -196,13 +216,20 @@ public class UserInterface extends javax.swing.JFrame {
         jPanel3.setOpaque(false);
 
         jPanel8.setOpaque(false);
-
+        
+        //Objeto tipo label que va a contener el tiempo que lleva
+        //reproduciéndose una canción
         labelTimeElapsed.setForeground(new java.awt.Color(184, 169, 169));
         labelTimeElapsed.setText("00:00:00");
 
+        //Objeto tipo label que va a contener el tiempo que le queda
+        //por reproducir a una canción
         labelTimeRemaining.setForeground(new java.awt.Color(184, 169, 169));
         labelTimeRemaining.setText("00:00:00");
 
+        
+        //Se añaden los contadores y la progressBar que miden el
+        //progreso de las canciones
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -231,13 +258,17 @@ public class UserInterface extends javax.swing.JFrame {
 
         jPanel9.setOpaque(false);
 
+        //Objeto tipo label que indica el nombre de la canción
         labelMusicTitle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelMusicTitle.setForeground(new java.awt.Color(255, 255, 255));
         labelMusicTitle.setText("Music Title");
 
+        //Objeto tipo label que indica el nombre del artista
         labelDetail.setForeground(new java.awt.Color(184, 169, 169));
         labelDetail.setText("Artist Name");
 
+        
+        //Se añaden los label de artista y titulo de cancion
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -261,7 +292,9 @@ public class UserInterface extends javax.swing.JFrame {
         );
 
         jPanel10.setOpaque(false);
-
+        
+       //Este JPanel contiene el label que va a cargar la imagen del
+        //album de cada canción
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -275,7 +308,10 @@ public class UserInterface extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lebelImageAlbum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
+        
+        
+        //Añadimos los subpaneles 8,9 y 10 al panel3, indicando posición
+        //y tamaño
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -296,8 +332,10 @@ public class UserInterface extends javax.swing.JFrame {
 
         jPanel4.setOpaque(false);
 
-        jPanel5.setOpaque(false);
-
+        jPanel5.setOpaque(false); 
+        //Va a contener a los botones que influyan sobre las canciones
+        
+        //Botón random implementación de métodos y diseño del botón
         btnRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/random.png"))); // NOI18N
         btnRandom.setBorderPainted(false);
         btnRandom.setContentAreaFilled(false);
@@ -315,7 +353,7 @@ public class UserInterface extends javax.swing.JFrame {
                 randomClicked(evt);
             }
         });
-
+      //Botón previous implementación de métodos y diseño del botón
         btnPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/previous.png"))); // NOI18N
         btnPrevious.setBorderPainted(false);
         btnPrevious.setContentAreaFilled(false);
@@ -333,7 +371,7 @@ public class UserInterface extends javax.swing.JFrame {
                 previousClicked(evt);
             }
         });
-
+      //Botón reproducir implementación de métodos y diseño del botón
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/play.png"))); // NOI18N
         btnPlay.setBorderPainted(false);
         btnPlay.setContentAreaFilled(false);
@@ -352,6 +390,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+      //Botón siguiente implementación de métodos y diseño del botón
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/next.png"))); // NOI18N
         btnNext.setBorderPainted(false);
         btnNext.setContentAreaFilled(false);
@@ -370,6 +409,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        //Botón repetir implementación de métodos y diseño del botón
         btnRepeat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/repeat.png"))); // NOI18N
         btnRepeat.setBorderPainted(false);
         btnRepeat.setContentAreaFilled(false);
@@ -387,7 +427,7 @@ public class UserInterface extends javax.swing.JFrame {
                 repeatClicked(evt);
             }
         });
-
+        //Añadimos los botones que van a influir en las canciones
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -424,7 +464,9 @@ public class UserInterface extends javax.swing.JFrame {
         );
 
         jPanel6.setOpaque(false);
-
+        //Va a contener a los botones que influyan sobre la JList
+        
+        //Botón upload implementación de métodos y diseño del botón
         btnUpload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/upload.png"))); // NOI18N
         btnUpload.setBorderPainted(false);
         btnUpload.setContentAreaFilled(false);
@@ -443,6 +485,7 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
+        //Botón borrar canción implementación de métodos y diseño del botón
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/delete.png"))); // NOI18N
         btnDelete.setBorderPainted(false);
         btnDelete.setContentAreaFilled(false);
@@ -460,7 +503,8 @@ public class UserInterface extends javax.swing.JFrame {
                 deleteClicked(evt);
             }
         });
-
+        
+        //Botón borrar playlist implementación de métodos y diseño del botón
         btnDeleteAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/delete-all.png"))); // NOI18N
         btnDeleteAll.setBorderPainted(false);
         btnDeleteAll.setContentAreaFilled(false);
@@ -478,7 +522,7 @@ public class UserInterface extends javax.swing.JFrame {
                 deleteAllClicked(evt);
             }
         });
-
+      //Añadimos los botones que van a influir en las playlists
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -502,7 +546,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(btnUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-
+        //Añadimos los paneles que contienen los botones
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -521,7 +565,9 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(28, 28, 28))
         );
-
+        
+        //Este es el superpanel que contiene a todos los paneles
+        //previamente definidos
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
@@ -544,7 +590,7 @@ public class UserInterface extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
+        //Añadimos a la ventana el superpanel
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -557,71 +603,84 @@ public class UserInterface extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
      //=====================================================================================================  hovers
     
-    private void EnteredRandom(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EnteredRandom
+    //Cambia la imagen si el cursor se pone encima del botón random
+    private void EnteredRandom(java.awt.event.MouseEvent evt) {
         changeImage(randomImageEntered, btnRandom);
-    }//GEN-LAST:event_EnteredRandom
+    }
 
-    private void exitedRandom(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedRandom
+  //Vuelve a cambiar la imagen si el cursor sale del botón random
+    private void exitedRandom(java.awt.event.MouseEvent evt) {
         changeImage(randomImageExited, btnRandom);
-    }//GEN-LAST:event_exitedRandom
+    }
 
-    private void enteredPrevious(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredPrevious
+  //Cambia la imagen si el cursor se pone encima del botón canción previa
+    private void enteredPrevious(java.awt.event.MouseEvent evt) {
         changeImage("images/previous_h.png", btnPrevious);
-    }//GEN-LAST:event_enteredPrevious
+    }
 
-    private void exitedPrevious(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedPrevious
+  //Vuelve a cambiar la imagen si el cursor sale del botón canción previa
+    private void exitedPrevious(java.awt.event.MouseEvent evt) {
          changeImage("images/previous.png", btnPrevious);
-    }//GEN-LAST:event_exitedPrevious
+    }
 
-    private void enteredPlay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredPlay
+    private void enteredPlay(java.awt.event.MouseEvent evt) {
         changeImage(playImageEntered, btnPlay);
-    }//GEN-LAST:event_enteredPlay
-
-    private void enteredNext(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredNext
-        changeImage("images/next_h.png", btnNext);
-    }//GEN-LAST:event_enteredNext
-
-    private void exitedNext(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedNext
-        changeImage("images/next.png", btnNext);
-    }//GEN-LAST:event_exitedNext
-
-    private void enteredRepeat(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredRepeat
-        changeImage(repeatImageEntered, btnRepeat);
-    }//GEN-LAST:event_enteredRepeat
-
-    private void exitedRepeat(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedRepeat
-        changeImage(repeatImageExited, btnRepeat);
-    }//GEN-LAST:event_exitedRepeat
-
-    private void enteredUpload(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredUpload
-        changeImage("images/upload_h.png", btnUpload);
-    }//GEN-LAST:event_enteredUpload
-
-    private void exitedUpload(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedUpload
-        changeImage("images/upload.png", btnUpload);
-    }//GEN-LAST:event_exitedUpload
-
-    private void enteredDelete(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredDelete
-        changeImage("images/delete_h.png", btnDelete);
-    }//GEN-LAST:event_enteredDelete
-
-    private void exitedDelete(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedDelete
-        changeImage("images/delete.png", btnDelete);
-    }//GEN-LAST:event_exitedDelete
-
-    private void exitedDeleteAll(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedDeleteAll
-        changeImage("images/delete-all_h.png", btnDeleteAll);
-    }//GEN-LAST:event_exitedDeleteAll
-
-    private void enteredDeleteAll(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enteredDeleteAll
-        changeImage("images/delete-all.png", btnDeleteAll);
-    }//GEN-LAST:event_enteredDeleteAll
-
+    }
     
+
+    private void exitedPlay(java.awt.event.MouseEvent evt) {
+        changeImage(playImageExited, btnPlay);
+    }
+
+    //Cambia la imagen si el cursor se pone encima del botón canción siguiente
+    private void enteredNext(java.awt.event.MouseEvent evt) {
+        changeImage("images/next_h.png", btnNext);
+    }
+
+  //Vuelve a cambiar la imagen si el cursor sale del botón siguiente canción
+    private void exitedNext(java.awt.event.MouseEvent evt) {
+        changeImage("images/next.png", btnNext);
+    }
+    
+    //Cambia la imagen si el cursor se pone encima del botón repetir canción
+    private void enteredRepeat(java.awt.event.MouseEvent evt) {
+        changeImage(repeatImageEntered, btnRepeat);
+    }
+
+  //Vuelve a cambiar la imagen si el cursor sale del botón repetir cancion
+    private void exitedRepeat(java.awt.event.MouseEvent evt) {
+        changeImage(repeatImageExited, btnRepeat);
+    }
+
+    private void enteredUpload(java.awt.event.MouseEvent evt) {
+        changeImage("images/upload_h.png", btnUpload);
+    }
+
+    private void exitedUpload(java.awt.event.MouseEvent evt) {
+        changeImage("images/upload.png", btnUpload);
+    }
+
+    private void enteredDelete(java.awt.event.MouseEvent evt) {
+        changeImage("images/delete_h.png", btnDelete);
+    }
+
+    private void exitedDelete(java.awt.event.MouseEvent evt) {
+        changeImage("images/delete.png", btnDelete);
+    }
+
+    private void exitedDeleteAll(java.awt.event.MouseEvent evt) {
+        changeImage("images/delete-all_h.png", btnDeleteAll);
+    }
+
+    private void enteredDeleteAll(java.awt.event.MouseEvent evt) {
+        changeImage("images/delete-all.png", btnDeleteAll);
+    }
+
+    //Metodo cambiar foto al que hemos estado llamando
     private void changeImage(String path, JButton button){
         Image img = null;
         try {
@@ -635,20 +694,22 @@ public class UserInterface extends javax.swing.JFrame {
     
     
     
-    
-    private void minimizeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeClick
+    //Declaración de la función del botón minimizar
+    private void minimizeClick(java.awt.event.MouseEvent evt) {
         setExtendedState(JFrame.CROSSHAIR_CURSOR);
-    }//GEN-LAST:event_minimizeClick
+    }
 
-    private void closeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeClick
+    //Declaración de la función del botón cerrar
+    private void closeClick(java.awt.event.MouseEvent evt) {
         controller.saveMusics();
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-    }//GEN-LAST:event_closeClick
+    }
 
     
-///////////////////////////////////////////////////////////////////////////////////////end close y minimize operations    
+///////////////////////////////////////////////////////////////////////////////////////    
     
-    private void randomClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomClicked
+    //Evento que se produce a la hora de clicar en random
+    private void randomClicked(java.awt.event.ActionEvent evt) {
         random = !random;
         if(random){
             randomImageEntered = "images/random.png";
@@ -661,15 +722,16 @@ public class UserInterface extends javax.swing.JFrame {
             changeImage(randomImageExited, btnRandom);
         }
         repeat = false;
-    }//GEN-LAST:event_randomClicked
+    }
 
-    private void previousClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousClicked
+    //Evento que se produce a la hora de clicar en cancion previa
+    private void previousClicked(java.awt.event.ActionEvent evt) {
         controller.preview();
-    }//GEN-LAST:event_previousClicked
+    }
+    
+    //Evento que se produce a la hora de clicar en reproducir
+    private void playClicked(java.awt.event.ActionEvent evt) {
 
-    private void playClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playClicked
-
-        //switch can be used
         if(playState.equals("PLAYING")){
             playImageEntered="images/play_h.png";
             playImageExited="images/play.png";
@@ -696,13 +758,14 @@ public class UserInterface extends javax.swing.JFrame {
             playState = "PLAYING";
             return;
         }
-    }//GEN-LAST:event_playClicked
-
-    private void nextClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextClicked
+    }
+    
+    //Evento que se produce a la hora de clicar en siguiente canción
+    private void nextClicked(java.awt.event.ActionEvent evt) {
         controller.next();
-    }//GEN-LAST:event_nextClicked
-
-    private void repeatClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repeatClicked
+    }
+    //Evento que se produce a la hora de clicar en repetir canción
+    private void repeatClicked(java.awt.event.ActionEvent evt) {
         repeat = !repeat;
         if(repeat){
             repeatImageEntered = "images/repeat.png";
@@ -715,60 +778,47 @@ public class UserInterface extends javax.swing.JFrame {
             changeImage(repeatImageExited, btnRepeat);
         }
         random = false;
-    }//GEN-LAST:event_repeatClicked
+    }
 
-    private void uploadClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadClicked
+  //Evento que se produce a la hora de clicar en añadir cancion
+    private void uploadClicked(java.awt.event.ActionEvent evt) {
         controller.addFiles(jList1);
-    }//GEN-LAST:event_uploadClicked
-
-    private void deleteClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteClicked
+    }
+  //Evento que se produce a la hora de clicar en borrar cancion
+    private void deleteClicked(java.awt.event.ActionEvent evt) {
         controller.deleteMusic(jList1.getSelectedIndex());
         playImageEntered="images/play_h.png";
         playImageExited="images/play.png";
         changeImage(playImageExited, btnPlay);
-    }//GEN-LAST:event_deleteClicked
+    }
 
-    private void deleteAllClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAllClicked
+  //Evento que se produce a la hora de clicar en borrar playlist
+    private void deleteAllClicked(java.awt.event.ActionEvent evt) {
         controller.deleteAllMusics();
         playImageEntered="images/play_h.png";
         playImageExited="images/play.png";
         changeImage(playImageExited, btnPlay);
-    }//GEN-LAST:event_deleteAllClicked
+    }
 
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+    //Evento que se produce cuando se selecciona una canción
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2){ 
             
             selectedIndex = jList1.getSelectedIndex();
-            
             controller.play(selectedIndex);
-            
             playImageEntered="images/pause_h.png";
             playImageExited="images/pause.png";
             changeImage(playImageExited, btnPlay);
-            
             playState = "PLAYING";
- 
         }else{
-            
             selectedIndex = jList1.getSelectedIndex();
-            
             controller.setDetail(selectedIndex);
-            
             playState = "SELECTED";
             
         }
-    }//GEN-LAST:event_jList1MouseClicked
+    }
 
-    private void exitedPlay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitedPlay
-        changeImage(playImageExited, btnPlay);
-    }//GEN-LAST:event_exitedPlay
-
-    /**
-     * @param args the command line arguments
-     */
     
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteAll;
