@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.3" maxVersion="1.9" >
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="undecorated" type="boolean" value="true"/>
@@ -37,11 +37,11 @@
   <SubComponents>
     <Container class="keeptoo.KGradientPanel" name="kGradientPanel1">
       <Properties>
-        <Property name="kEndColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+        <Property name="kEndColor" type="java.awt.Color">
           <Color blue="4c" green="29" red="2a" type="rgb"/>
         </Property>
         <Property name="kGradientFocus" type="int" value="0"/>
-        <Property name="kStartColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+        <Property name="kStartColor" type="java.awt.Color">
           <Color blue="6f" green="6e" red="bd" type="rgb"/>
         </Property>
       </Properties>
@@ -105,9 +105,10 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
+          	<!-- Boton de cerrar la ventana -->
             <Component class="javax.swing.JButton" name="btnClose">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                <Property name="icon" type="javax.swing.Icon">
                   <Image iconType="3" name="/view/images/close.png"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
@@ -118,9 +119,10 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="closeClick"/>
               </Events>
             </Component>
+            <!-- Boton de minimizar ventana -->
             <Component class="javax.swing.JButton" name="btnMinimize">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                <Property name="icon" type="javax.swing.Icon">
                   <Image iconType="3" name="/view/images/minimize.png"/>
                 </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
@@ -467,6 +469,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
+              <!--Boton de canción al azar -->
                 <Component class="javax.swing.JButton" name="btnRandom">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -482,6 +485,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="randomClicked"/>
                   </Events>
                 </Component>
+                <!-- Boton de canción anterior -->
                 <Component class="javax.swing.JButton" name="btnPrevious">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -497,6 +501,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previousClicked"/>
                   </Events>
                 </Component>
+                <!-- Boton reproducir-->
                 <Component class="javax.swing.JButton" name="btnPlay">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -512,6 +517,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playClicked"/>
                   </Events>
                 </Component>
+                <!-- Boton saltar cancion-->
                 <Component class="javax.swing.JButton" name="btnNext">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -527,6 +533,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextClicked"/>
                   </Events>
                 </Component>
+                <!-- Boton bucle -->
                 <Component class="javax.swing.JButton" name="btnRepeat">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -578,6 +585,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
+              <!-- Boton meter cancion -->
                 <Component class="javax.swing.JButton" name="btnUpload">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -593,6 +601,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uploadClicked"/>
                   </Events>
                 </Component>
+                <!-- Boton eliminar cancion-->
                 <Component class="javax.swing.JButton" name="btnDelete">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -608,6 +617,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteClicked"/>
                   </Events>
                 </Component>
+                <!-- Boton vaciar playlist -->
                 <Component class="javax.swing.JButton" name="btnDeleteAll">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
