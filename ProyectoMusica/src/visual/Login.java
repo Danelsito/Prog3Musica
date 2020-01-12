@@ -32,7 +32,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	public static BD conn = new BD();
+	public static BD bd = new BD();
 	
 
 	/**
@@ -89,13 +89,13 @@ public class Login extends JFrame {
 		JButton btnSingIn = new JButton("Sign In");
 		btnSingIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String usuarioIntroducido = textField.getText().replace(" ", "");
+				System.out.println("1");
+				String usuarioIntroducido = textField.getText();
 				//Cifra el texto introducido por el usuario en SHA1 y MD5 y lo compara con la BD.
-				@SuppressWarnings("deprecation")
-				String passIntroducido = passwordField.getText();
-
-				if (conn.login(usuarioIntroducido, passIntroducido)) {
+				String passIntroducido = new String(passwordField.getPassword());
+				System.out.println(passIntroducido);
+	
+				if (bd.login(usuarioIntroducido, passIntroducido)) {
 					//Datos.propiedades.put("key", usuarioIntroducido+";"+passIntroducido);
 					dispose();
 					loguear(usuarioIntroducido);
@@ -115,8 +115,8 @@ public class Login extends JFrame {
 		JButton btnRegistro = new JButton("Registro");
 		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Registro v = new Registro();
-				v.setVisible(true);
+				Registro r = new Registro();
+				r.setVisible(true);
 				dispose();
 			}
 		});
@@ -125,7 +125,7 @@ public class Login extends JFrame {
 	}
 	
 	public static void loguear(String usuario) {
-		conn.crearUsuarioLocal(usuario); // Creamos el objeto de usuario local del cliente, para acceder a los datos de manera rápida.
+		bd.crearUsuarioLocal(usuario); // Creamos el objeto de usuario local del cliente, para acceder a los datos de manera rápida.
 		//Datos.log.log(Level.INFO, "Inicio de sesión correcto con el usuario " + usuario);
 		
 		//VentanaPrincipal v;

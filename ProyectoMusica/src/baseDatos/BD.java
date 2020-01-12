@@ -24,17 +24,16 @@ import objetos.User;
 
 public class BD {
 	
+	private Connection conn;	
 	
-	public Connection connect() {
-		// SQLite connection string
-		String url = "jdbc:sqlite:src/basedatos.db";
-		Connection conn = null;
+	public void connect(){
 		try {
-			conn = DriverManager.getConnection(url);
-		} catch (SQLException e) {
-			Datos.log.log(Level.INFO, "No se ha podido conectar a la base de datos. " + e);
+			Class.forName("org.sqlite.JDBC");
+			conn = DriverManager.getConnection("jdbc:sqlite:basedatos.db");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			
 		}
-		return conn;
 	}
 	
 	public static void main(String[] args) throws SQLException {
@@ -46,7 +45,7 @@ public class BD {
 
 		String sql = "SELECT * FROM user WHERE username = '" + usuario + "'";
 
-		Connection conn = this.connect();
+		Connection conn = this.conn;
 		Statement stmt;
 		String password = null;
 		String nombre = null;
@@ -78,7 +77,7 @@ public class BD {
 	
 	public void tablaUsuario() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE IF NOT EXISTS usuario("
+			 PreparedStatement stmt = conn.prepareStatement("CREATE TABLE IF NOT EXISTS usuario("
 			 		+ "username varchar(50) PRIMARY KEY NOT NULL,"
 					+ "password VARCHAR(50) NOT NULL,"
 					+ "nombre VARCHAR(50) NOT NULL,"
@@ -98,7 +97,7 @@ public class BD {
 	
 	public void tablaCancion() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE cancion("
+			 PreparedStatement stmt = conn.prepareStatement("CREATE TABLE cancion("
 					+ "id INT(50) PRIMARY KEY NOT NULL,"
 			 		+ "titulo VARCHAR(50) NOT NULL,"
 					+ "duracion_en_segundos INT(50) NOT NULL,"
@@ -116,7 +115,7 @@ public class BD {
 	
 	public void tablaPlaylist() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlist("
+			 PreparedStatement stmt = conn.prepareStatement("CREATE TABLE playlist("
 					+ "id INT(50) PRIMARY KEY NOT NULL,"
 					+ "nombre_playlist VARCHAR(50) NOT NULL,"
 			 		+ "FOREIGN KEY(\"usuario\") REFERENCES \"usuario\"(\"username\") ON DELETE CASCADE,");
@@ -132,7 +131,7 @@ public class BD {
 	
 	public void tablaCancionPlaylist() {
 		try {
-			 PreparedStatement stmt = connect().prepareStatement("CREATE TABLE playlistCancion ("
+			 PreparedStatement stmt = conn.prepareStatement("CREATE TABLE playlistCancion ("
 					+ "FOREIGN KEY(\"idCancion\") REFERENCES \"cancion\"(\"id\") ON DELETE CASCADE,"
 					+ "FOREIGN KEY(\"idPlaylist\") REFERENCES \"playlist\"(\"id\") ON DELETE CASCADE,"
 					+ "PRIMARY KEY (id_cancion, id_playlist),"
@@ -149,7 +148,7 @@ public class BD {
 	
 	public void insertarCancionEnPlaylist(int idCancion, int idPlaylist) {
 		String sql = "INSERT INTO playlistCancion (idCancion, idPlaylist) VALUES (?,?,)";
-		Connection conn = this.connect();
+		Connection conn = this.conn;
 		
 	try {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -157,8 +156,6 @@ public class BD {
 		pstmt.setInt(2, idPlaylist);
 
 		pstmt.executeUpdate();
-		pstmt.close();
-		conn.close();
 		
 	} catch (SQLException sqle) {
 		System.out.println("Los datos introducidos no son correctos");
@@ -166,11 +163,11 @@ public class BD {
 		
 	}
 	
-	public void introducirUser(String username, String password, String nombre, String apellido, String email, int telefono, Date fecha) throws SQLException {
+	public void introducirUser(String username, String password, String nombre, String apellido, String email, int telefono) throws SQLException {
 		
 
 			String sql = "INSERT INTO user (username, password, nombre, apellidos, email, tlfn, fecha) VALUES (?,?,?,?,?,?,?)";
-			Connection conn = this.connect();
+			Connection conn = this.conn;
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 		try {
@@ -180,12 +177,8 @@ public class BD {
 			pstmt.setString(4, apellido);
 			pstmt.setString(5, email);
 			pstmt.setInt(6, telefono);
-			
-			String strFecha = fecha.toString();
-			pstmt.setString(7, strFecha);
+
 			pstmt.executeUpdate();
-			pstmt.close();
-			conn.close();
 			
 		} catch (SQLException sqle) {
 			System.out.println("Los datos introducidos no son correctos");
@@ -198,7 +191,7 @@ public class BD {
 	
 	public boolean login(String userIntroducido, String passIntroducido) {
 		String sql = "SELECT password FROM user WHERE username LIKE '" + userIntroducido + "'";
-		Connection conn = this.connect();
+		Connection conn = this.conn;
 		Statement stmt;
 		passIntroducido = passIntroducido.replaceAll(" ", "");
 		String password = "";
@@ -229,7 +222,7 @@ public class BD {
 		try {
 
 			String sql = "INSERT INTO cancion (titulo, duracion_en_segundos, album, artista, ubicacion) VALUES (?,?,?,?,?)";
-			Connection conn = this.connect();
+			Connection conn = this.conn;
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, titulo);
@@ -239,17 +232,16 @@ public class BD {
 			pstmt.setString(5, ubicacion);
 			
 			pstmt.executeUpdate();
-			pstmt.close();
-			conn.close();
-			
+
 		} catch (SQLException sqle) {
 			System.out.println("Los datos introducidos no son correctos");
 		}
 		
 	}
 	
-	public HashMap<Integer, String> consultarCanciones(String tituloIntroducido) {
-
+	public ArrayList<Cancion> consultarCancionesA(String tituloIntroducido){
+		ArrayList<Cancion> canciones = new ArrayList<>();
+		
 		String sql = "SELECT * FROM cancion WHERE titulo LIKE " + tituloIntroducido;
 		int id = 0;
 		String titulo = null;
@@ -257,9 +249,7 @@ public class BD {
 		String artista = null;
 		String album = null;
 		
-		 HashMap<Integer, String>  mapaCanciones = new HashMap<>();
-
-		Connection conn = this.connect();
+		Connection conn = this.conn;
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
@@ -277,46 +267,7 @@ public class BD {
 				
 				Cancion c = new Cancion(id, titulo, duracion, artista, album);
 				if (c.getTitulo().contains(tituloIntroducido)) {
-					mapaCanciones.put(id, titulo);
-				}
-			}
-		} catch (SQLException sqle) {
-			Datos.log.log(Level.SEVERE, "MÃ©todo consultar canciones ha fallado. " + sqle);
-			sqle.printStackTrace();
-			System.out.println("Sale del método");
-		}
-		return mapaCanciones;
-	}
-	
-	public ArrayList<String> consultarCancionesA(String tituloIntroducido){
-		ArrayList<String> canciones = new ArrayList<>();
-		
-		String sql = "SELECT * FROM cancion WHERE titulo LIKE " + tituloIntroducido;
-		int id = 0;
-		String titulo = null;
-		int duracion = 0;
-		String artista = null;
-		String album = null;
-		
-		Connection conn = this.connect();
-		Statement stmt;
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println("está en el método");
-
-			// loop through the result set
-			
-			while (rs.next()) {
-				id = rs.getInt("id");
-				titulo = rs.getString("titulo");
-				duracion = rs.getInt("duracion_en_segundos");
-				artista = rs.getString("artista");
-				album = rs.getString("album");
-				
-				Cancion c = new Cancion(id, titulo, duracion, artista, album);
-				if (c.getTitulo().contains(tituloIntroducido)) {
-					canciones.add(titulo);
+					canciones.add(c);
 				}
 			}
 		} catch (SQLException sqle) {

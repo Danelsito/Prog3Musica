@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.toedter.calendar.JDateChooser;
 
 import objetos.Datos;
 import objetos.User;
@@ -135,17 +134,7 @@ public class Registro extends JFrame {
 		
 		
 		 
-		// Instanciar Componente
-		JDateChooser dateChooser = new JDateChooser("yyyy/MM/dd", "####/##/##", '_');
 		 
-		// Ubicar y agregar al panel
-		dateChooser.setBounds(181, 293, 100, 20);
-		 
-		contentPane.add(dateChooser);
-		
-		JLabel lblFechaNac = new JLabel("Fecha nac:");
-		lblFechaNac.setBounds(78, 297, 76, 16);
-		contentPane.add(lblFechaNac);
 		
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,7 +147,6 @@ public class Registro extends JFrame {
 		
 		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Date fecha = dateChooser.getDate();
 				char[] clave = txfPass.getPassword();
 				String pass = new String(clave);
 				int tlfn = Integer.parseInt(txfTlfn.getText());
@@ -169,12 +157,12 @@ public class Registro extends JFrame {
 				String email = txfEmail.getText();
 				
 				try {
-					Datos.conn.introducirUser(username, pass, nombre, apellido, email, tlfn, fecha);
+					Datos.conn.introducirUser(username, pass, nombre, apellido, email, tlfn);
 				} catch (SQLException e1) {
 					
 					e1.printStackTrace();
 				}
-				User u = new User(username, pass, nombre, apellido, email, tlfn, fecha);
+				User u = new User(username, pass, nombre, apellido, email, tlfn);
 				Login l = new Login();
 				dispose();
 				l.setVisible(true);
