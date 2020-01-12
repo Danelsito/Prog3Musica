@@ -107,35 +107,9 @@ public class VentanaPrincipal extends JFrame{
 		textField = new JTextField();
 		panelBusqueda.add(textField);
 		textField.setColumns(10);
-		
-		JList<Cancion> jlistaCanciones = new JList<>();
-		jlistaCanciones.setBounds(0, 0, 390, 288);
-		panelCanciones.add(jlistaCanciones);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(405, 16, 142, 37);
-		contentPane.add(comboBox, BorderLayout.WEST);
-		bd.consultarCancionesA(textField.getText()).size();
-		for(int i = 0; i< bd.consultarCancionesA(textField.getText()).size(); i++){
-			comboBox.addItem(bd.consultarCancionesA(textField.getText()).get(i));
-		}
-		
+	
 		JButton btnBuscar = new JButton("Buscar");
 		panelBusqueda.add(btnBuscar, BorderLayout.EAST);
-		/*btnBuscar.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
-			public void actionPerformed(ActionEvent e) {
-				BD bd = new BD();
-				try {
-					bd.connect();
-					bd.consultarCanciones(textField.getText());
-					HashMap<Integer, String> mapaCanciones = bd.consultarCanciones(textField.getText());
-					jlistaCanciones.a(mapaCanciones);
-				} catch (Exception e2) {
-
-				}
-				
-			}
-		});*/
+		
 	}
 }
